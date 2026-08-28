@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Task Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>My task tracker</h1>
+    <p class="subtitle">Frontend on Azure Static Web Apps, database on Azure SQL, AI on GitHub Models.</p>
+    <section class="card">
+      <h2>Tasks</h2>
+      <form id="task-form">
+        <input type="text" id="task-input" placeholder="Add a new task..." required>
+        <button type="submit">Add</button>
+      </form>
+      <ul id="task-list"></ul>
+    </section>
+    <section class="card">
+      <h2>Ask the assistant</h2>
+      <form id="chat-form">
+        <input type="text" id="chat-input" placeholder="Ask anything..." required>
+        <button type="submit">Send</button>
+      </form>
+      <div id="chat-reply"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
