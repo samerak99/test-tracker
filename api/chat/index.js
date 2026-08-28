@@ -8,10 +8,11 @@ module.exports = async function (context, req) {
   try {
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
-      },
+     headers: {
+  "Content-Type": "application/json",
+  "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+  "User-Agent": "TaskTrackerApp/1.0"
+},
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
         messages: [
