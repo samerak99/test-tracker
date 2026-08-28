@@ -6,24 +6,20 @@ module.exports = async function (context, req) {
   }
 
   try {
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": process.env.GEMINI_API_KEY
-        },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: "You are a helpful assistant inside a personal task tracker app." }]
-          },
-          contents: [
-            { role: "user", parts: [{ text: userMessage }] }
-          ]
-        })
-      }
-    );
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          { role: "system", content: "You are a helpful assistant inside a personal task tracker app." },
+          { role: "user", content: userMessage }
+        ]
+      })
+    });
 
     if (!response.ok) {
       const errText = await response.text();
@@ -32,7 +28,7 @@ module.exports = async function (context, req) {
     }
 
     const data = await response.json();
-    const reply = data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text;
+    const reply = data.choices && data.choices[0] && data.choices[0].message.content;
     context.res = { body: { reply: reply || "Sorry, I couldn't generate a response." } };
   } catch (err) {
     context.log.error(err);
